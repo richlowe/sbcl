@@ -672,7 +672,7 @@ elif [ "$sbcl_arch" = "x86-64" ]; then
     printf ' :sb-simd-pack :sb-simd-pack-256 :avx2' >> $ltf
     printf ' :undefined-fun-restarts :call-symbol' >> $ltf
     case "$sbcl_os" in
-    linux | darwin | *bsd)
+    linux | darwin | *bsd | sunos)
         printf ' :immobile-space :immobile-code :compact-instance-header' >> $ltf
     esac
 elif [ "$sbcl_arch" = "mips" ]; then
