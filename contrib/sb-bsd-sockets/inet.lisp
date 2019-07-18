@@ -61,7 +61,6 @@ a list of protocol aliases"
           (max-buffer 10000)
           (result-buf nil)
           (buffer nil)
-          #-solaris
           (result nil))
       (declare (type fixnum buffer-length)
                (type fixnum max-buffer))
@@ -70,16 +69,14 @@ a list of protocol aliases"
              (progn
                (setf result-buf (sb-alien:make-alien sockint::protoent)
                      buffer (sb-alien:make-alien sb-alien:char buffer-length))
-               #-solaris
                (setf result (sb-alien:make-alien (* sockint::protoent)))
                (when (or (sb-alien:null-alien result-buf)
                          (sb-alien:null-alien buffer)
                          (sb-alien:null-alien result))
                  (error "Could not allocate foreign memory."))
                (let ((res (sockint::getprotobyname-r
-                           name result-buf buffer buffer-length #-solaris result)))
+                           name result-buf buffer buffer-length result)))
                  (cond ((eql res 0)
-                        #-solaris
                         (when (sb-alien:null-alien (sb-alien:deref result 0))
                           (error 'unknown-protocol :name name))
                         (return-from getprotobyname
@@ -99,7 +96,6 @@ a list of protocol aliases"
             (sb-alien:free-alien result-buf))
           (when buffer
             (sb-alien:free-alien buffer))
-          #-solaris
           (when result
             (sb-alien:free-alien result)))))
     #+(or (not sb-thread) (not os-provides-getprotoby-r) netbsd)

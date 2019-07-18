@@ -144,7 +144,6 @@
                                                  (result_buf (* protoent))
                                                  (buffer (* char))
                                                  (buffer-len size-t)
-                                                 #-solaris
                                                  (result (* (* protoent)))))
 
 
@@ -157,7 +156,6 @@
                                                  (result_buf (* protoent))
                                                  (buffer (* char))
                                                  (buffer-len size-t)
-                                                 #-solaris
                                                  (result (* (* protoent)))))
 
  (:integer inaddr-any "INADDR_ANY")
