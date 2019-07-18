@@ -3381,12 +3381,7 @@ register."
     ;; behind. The best way to do this is different on each machine,
     ;; so we just leave it up to the C code.
     (breakpoint-do-displaced-inst signal-context
-                                  (breakpoint-data-instruction data))
-    ;; Some platforms have no usable sigreturn() call.  If your
-    ;; implementation of arch_do_displaced_inst() _does_ sigreturn(),
-    ;; it's polite to warn here
-    #+(and sparc solaris)
-    (error "BREAKPOINT-DO-DISPLACED-INST returned?")))
+                                  (breakpoint-data-instruction data))))
 
 (defun invoke-breakpoint-hooks (breakpoints signal-context)
   (let* ((frame (signal-context-frame signal-context)))

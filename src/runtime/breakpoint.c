@@ -46,17 +46,6 @@ void breakpoint_remove(lispobj code_obj, int pc_offset,
 void breakpoint_do_displaced_inst(os_context_t* context,
                                   unsigned int orig_inst)
 {
-    /* on platforms with sigreturn(), we go directly back from
-     * arch_do_displaced_inst() to lisp code, so we need to clean up
-     * our bindings now.  (side note: I'd love to know in exactly what
-     * scenario the speed of breakpoint handling is critical enough to
-     * justify this maintenance mess)
-     *
-     * -dan 2001.08.09 */
-
-#if (defined(LISP_FEATURE_SPARC) && defined (solaris))
-    undo_fake_foreign_function_call(context);
-#endif
     arch_do_displaced_inst(context, orig_inst);
 }
 
